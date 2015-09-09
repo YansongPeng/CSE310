@@ -1,0 +1,25 @@
+Start Ravi
+ParallelAverage
+Select 359
+MergeSort
+InsertionSort
+End Ravi
+Start Amy
+InsertionSort
+ParallelMergeSort
+InsertionSort
+ParallelAverage
+ParallelAverage
+End Amy
+Start Bingli
+Average
+Average
+MergeSort
+InsertionSort
+ParallelMergeSort
+ParallelAverage
+Select 42
+InsertionSort
+ParallelMergeSort
+End Bingli
+Exit
