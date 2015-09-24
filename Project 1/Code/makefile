@@ -1,10 +1,27 @@
-all: p1
+TARGET = p1
+LIBS = -lm
+CC = g++
+CFLAGS = -c
 
-p1: main.o
-	g++ main.o -o p1
+.PHONY: default all clean
 
-main.o: main.cc
-	g++ -c main.cc
+default: $(TARGET)
+all: default
+
+OBJECTS = $(patsubst %.cc, %.o, $(wildcard *.cc))
+HEADERS = $(wildcard *.h)
+
+%.o: %.cc $(HEADERS)
+	$(CC) $(CFLAGS) -c $< -o $@ -lrt -fopenmp -g
+
+
+
+.PRECIOUS: $(TARGET) $(OBJECTS)
+
+$(TARGET): $(OBJECTS)
+	$(CC) $(OBJECTS) -Wall $(LIBS) -o $@ -lrt -fopenmp 
+
 
 clean:
-	rm *o p1
+	-rm -f *.o
+	-rm -f $(TARGET)
