@@ -1,0 +1,21 @@
+Start Amy10
+InsertionSort
+MergeSort
+End Amy10
+Start Amy100
+InsertionSort
+MergeSort
+End Amy100
+Start Amy500
+InsertionSort
+MergeSort
+End Amy500
+Start Amy1000
+InsertionSort
+MergeSort
+End Amy1000
+Start Amy5000
+InsertionSort
+MergeSort
+End Amy5000
+Exit

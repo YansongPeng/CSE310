@@ -1,0 +1,25 @@
+Start Amy10
+MergeSort
+ParallelMergeSort
+End Amy10
+Start Amy100
+MergeSort
+ParallelMergeSort
+End Amy100
+Start Amy500
+MergeSort
+ParallelMergeSort
+End Amy500
+Start Amy1000
+MergeSort
+ParallelMergeSort
+End Amy1000
+Start Amy5000
+MergeSort
+ParallelMergeSort
+End Amy5000
+Start Amy10000
+MergeSort
+ParallelMergeSort
+End Amy10000
+Exit

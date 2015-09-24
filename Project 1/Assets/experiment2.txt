@@ -1,0 +1,25 @@
+Start Amy10
+Average
+ParallelAverage
+End Amy10
+Start Amy100
+Average
+ParallelAverage
+End Amy100
+Start Amy500
+Average
+ParallelAverage
+End Amy500
+Start Amy1000
+Average
+ParallelAverage
+End Amy1000
+Start Amy5000
+Average
+ParallelAverage
+End Amy5000
+Start Amy10000
+Average
+ParallelAverage
+End Amy10000
+Exit

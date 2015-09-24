@@ -1,14 +1,22 @@
-1.	Describe any problems encountered in your implementation for this project milestone.
-	• My implementation and login flow of the program is sloppy.
-	• I would like to pass around variables instead of relying on them at a global level
-	• I need to brush-up on my C++ skills prior to the full submission of this project. I feel that some implementation was “hacky”.
+1.Describe any problems encountered in your implementation for this project milestone.
+	• My implementation and logic flow is sloppy. If I had more time, I would definitely better migrate my repeated code to functions. This includes my elapsed time (timer) statistical data and function output (Avg num of steps: / Time to run:).
 
-Describe any known bugs and/or incomplete command implementation for the project milestone.
-	• Only functions required for the milestone are included in this submission, the others must be finalized. They are throwing compile errros so I have left them out.
 
-Describe any significant collaboration with anyone (peers or otherwise) and/or clearly reference any external code bases used.
+
+
+
+2. Describe any known bugs and/or incomplete command implementation for the project milestone.
+	• All of my implementation is complete, working and tested.
+
+
+
+
+3. Describe any significant collaboration with anyone (peers or otherwise) and/or clearly reference any external code bases used.
 	• StackOverflow is a huge relief for small compiler issues.
-•	I used a derivative of this users timeoftheday() implementation: http://stackoverflow.com/questions/5362577/c-gettimeofday-for-computing-time
-• Useful in visualzing sorting alogithm (compares and swaps): http://www.sorting-algorithms.com
-• Refresher for memory management: http://www.cplusplus.com/doc/tutorial/dynamic/
-• Great c++ memory refresher: http://learnxinyminutes.com/docs/c++/
+	•	I used a derivative of this users timeoftheday() implementation: http://stackoverflow.com/questions/5362577/c-gettimeofday-for-computing-time
+	• Useful in visualzing sorting alogithm (compares and swaps): http://www.sorting-algorithms.com
+	• Refresher for memory management: http://www.cplusplus.com/doc/tutorial/dynamic/
+	• Great c++ memory refresher: http://learnxinyminutes.com/docs/c++/
+	• Code examples for algorithms from the wonderful book: Algorithms in a Nutshell (O'Reilly)
+	• OpenMP Tutorials: https://computing.llnl.gov/tutorials/openMP/
+	• Sequence Generator for experiments and test fitness data: https://www.random.org/sequences/
