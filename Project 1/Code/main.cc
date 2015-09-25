@@ -71,7 +71,7 @@ int main(int argc, char** argv) {
 			// Output statistics
 			cout << "Number of comparisons made by merge sort: " << comparisons << '\n';
 			cout << "Number of swaps made by merge sort: " << swaps << '\n';
-			cout << "Time to run merge sort (ms): " << (double) timeinterval/1000000 << '\n';
+			cout << "Time to run merge sort(ms): " << (double) timeinterval/1000000 << '\n';
 
 			swaps = 0;
 			comparisons = 0;
@@ -97,7 +97,7 @@ int main(int argc, char** argv) {
 			// Output statistics
 			cout << "Number of comparisons made by parallel merge sort: " << comparisons << '\n';
 			cout << "Number of swaps made by parallel merge sort: " << swaps << '\n';
-			cout << "Time to run parallel merge sort (ms): " << (double) timeinterval/1000000 << '\n';
+			cout << "Time to run parallel merge sort(ms): " << (double) timeinterval/1000000 << '\n';
 
 			swaps = 0;
 			comparisons = 0;
@@ -256,7 +256,7 @@ void insertionSort(int length) {
 done:
 	cout << "Number of comparisons made by insertion sort: " << comparisons << '\n';
 	cout << "Number of swaps made by insertion sort: " << swaps << '\n';
-	cout << "Time to run insertion sort (ms): " << (double) timeinterval/1000000 << '\n';
+	cout << "Time to run insertion sort(ms): " << (double) timeinterval/1000000 << '\n';
 
 	swaps = 0;
 	comparisons = 0;
@@ -335,7 +335,7 @@ void select(string _selection, int length) {
 
 		// Output statistics
 		cout << "Selecting item: " << result << '\n';
-		cout << "Time to run the selection (ms): " << (double) timeinterval/1000000 << '\n';
+		cout << "Time to run the selection(ms): " << (double) timeinterval/1000000 << '\n';
 
 	} else {
 		cerr << "Unable to select from an unsorted array.\n";
@@ -454,7 +454,7 @@ void average(int length) {
 
 	// Output statistics
 	cout << "Average number of steps: " << avgDailySteps << '\n';
-	cout << "Time to run the average (ms): " << (double) timeinterval/1000000 << '\n';
+	cout << "Time to run the average(ms): " << (double) timeinterval/1000000 << '\n';
 }
 
 /* Average
