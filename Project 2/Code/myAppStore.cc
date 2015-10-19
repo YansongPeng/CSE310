@@ -2,7 +2,9 @@
 #include	<iostream>
 #include	<string>
 #include	<sstream>
-#include	<tgmath.h>
+#include	<string.h>
+#include	<stdlib.h>
+#include	<math.h>
 
 using namespace std;
 
