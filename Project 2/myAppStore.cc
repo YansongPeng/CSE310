@@ -10,6 +10,8 @@ using namespace std;
 #define	APP_NAME_LEN	50
 #define	VERSION_LEN	10
 #define	UNIT_SIZE	3
+#define OPERATION_LEN 7
+
 
 struct categories{
 	char category[ CAT_NAME_LEN ]; // Name of category
@@ -50,7 +52,7 @@ struct hash_table_entry{
 	struct tree* right;  // Pointer to the right subtree; elements with keys > key of app_info2
  struct tree* parent; // A pointer to the parent may be useful
  };
-*/
+ */
 
 // Allocate an array of size n of type struct categories
 struct categories* categoryList;
@@ -67,11 +69,22 @@ int hashASCII(char* appName);
 void insertHashEntry(tree* node);
 int nextPrimeNumber(int min);
 
+// Operations and queries
+char *operationSubjects[] = { "app", "category", "price" };
+void findHashEntry(char* appName);
+void findCategory(char* catName);
+int traversePriceFree(tree *node, int found);
+void findPriceFree();
+void rangePrice(char* category);
+int traverseRangePrice(tree *node, int found, int low, int high);
+void rangeApp(char* category);
+int traverseRangeApp(tree *node, int found, char* low, char* high);
+
 int main()
 {
 	// Allocate an array of size n of type struct categories
 	cin >> categoryListLength;
-	categoryList = new categories[categoryListLength]; //TODO memory management
+	categoryList = new categories[categoryListLength]; // Deallocate on exit
 	
 	// Clear input stream, fixes line 73 skipping one input
 	cin.ignore();
@@ -86,18 +99,18 @@ int main()
 	}
 	
 	// Populate myAppStore categories BST dwith m applications
-	int numberOfApplications;
-	cin >> numberOfApplications;
+	int numberOfApplications; cin >> numberOfApplications;
 	
 	// Intialize <hashTable> to size k that is the first prime number greater than 2 * <numberOfApplications>.
 	hashTableLength = nextPrimeNumber(2*numberOfApplications);
-	hashTable = new hash_table_entry[hashTableLength]; //TODO memory management
+	hashTable = new hash_table_entry[hashTableLength]; // Deallocate on exit
 	
 	// For safety, set all app_nodes in <hashTable> to NULL
 	for (int i = 0; i < hashTableLength; i++) {
 		hashTable[i].app_node = NULL;
 	}
 	
+	// Populate myAppStore with m applications
 	for (int i = 0; i<numberOfApplications; i++) {
 		struct tree* node = new tree();
 		
@@ -112,7 +125,7 @@ int main()
 		
 		int desiredCategoryIndex = -1;
 		printf("Searching for category: %s\n", categoryName); //TODO remove this, debug only
-															  // Search the array of categories, to find the position matching the category of the application.
+		// Search the array of categories, to find the position matching the category of the application.
 		for (int index = 0; index <= categoryListLength; index++) {
 			
 			// Compare category name at <index> with desired category name
@@ -142,19 +155,59 @@ int main()
 			insertHashEntry(node);
 			
 		}
-//		printTree(categoryList[desiredCategoryIndex].root);
+		// printTree(categoryList[desiredCategoryIndex].root); // TODO remove this, debug only
 	}
+	
+	// Process q queries and updates
+	int q; cin >> q;
+	char operation[OPERATION_LEN];
+	
+	for (int i = 0; i < q; i++) {
+		// Read in first keyword, the operation to perform
+		cin >> operation;
+		if (strcmp(operation, "find") == 0) { // find <subject> <key>
+			char subject[9]; cin >> subject;
+			if (strcmp(subject, operationSubjects[0]) == 0) { // find app <appName>
+				char appName[APP_NAME_LEN]; cin >> appName;
+				findHashEntry(appName);
+			} else if (strcmp(subject, operationSubjects[1]) == 0) { // find category <catName>
+				char catName[CAT_NAME_LEN]; cin >> catName;
+				findCategory(catName);
+			} else if (strcmp(subject, operationSubjects[2]) == 0) { // find price free
+				char price[5]; cin >> price; // Clear buffer, protentionally find specific price
+				findPriceFree();
+			}
+		} else if (strcmp(operation, "range") == 0) {
+			char category[ CAT_NAME_LEN ]; cin >> category; // category of <categoryList>
+			char subject [ 9 ]; cin >> subject; // price or app
+			if (strcmp(subject, operationSubjects[2]) == 0) { // range <category> price <low> <high>
+				rangePrice(category);
+			} else if (strcmp(subject, operationSubjects[0]) == 0) { // range <category> app <low> <high>
+				rangeApp(category);
+			}
+		} else if (strcmp(operation, "delete") == 0) {
+			
+		}
+	}
+	
+	// Terminate myAppStore gracefully, with proper memory management
+	for (int i = 0; i < categoryListLength; i++) { // Free search tree associated with each application category
+		free(categoryList[i].root);
+	}
+	free(categoryList); // Free array of categories
+	free(hashTable); // Free hash table
+	
+	return 0; // Exit gracefully
 }
 
 // Insert passed node into passed binary search tree
-void insert(tree* node, tree** root)
-{
+void insert(tree* node, tree** root) {
 	if (*root == NULL) {
 		*root = node;
 		(*root)->left = NULL;
 		(*root)->right = NULL;
 	}
-
+	
 	else if(strcmp(node->app.app_name, (*root)->app.app_name) > 0) {
 		insert(node, &((*root)->right));
 	}
@@ -164,8 +217,7 @@ void insert(tree* node, tree** root)
 }
 
 // A utility function to do inorder traversal of BST
-void printTree(struct tree* root)
-{
+void printTree(struct tree* root) {
 	if (root != NULL)
 	{
 		printTree(root->left);
@@ -189,6 +241,7 @@ int hashASCII(char* appName) {
 	return (asciiSum % hashTableLength);
 }
 
+// Insert node into hash table
 void insertHashEntry(tree* node) {
 	int insertionIndex = hashASCII(node->app.app_name);
 	
@@ -218,6 +271,158 @@ void insertHashEntry(tree* node) {
 	}
 }
 
+// Find and print node in hash table by app_name
+void findHashEntry(char* appName) {
+	int hashIndex = hashASCII(appName); // Hash appName to <hashIndex>
+	int foundIndex = -1; // Store index of application when found, -1 if not found
+	
+	// Linear probe from hashIndex+1 to hashIndex
+	int i = hashIndex+1;
+	
+	if (strcmp(hashTable[hashIndex].app_name, appName) == 0) {
+		foundIndex = hashIndex;
+		goto end;
+	}
+	
+	while (strcmp(hashTable[i].app_name, appName) != 0) {
+		if (i > hashTableLength) i = 0; // Traverse in circular fashion
+		if (i == hashIndex) goto end;
+		i++;
+	}
+	
+	foundIndex = i; // Hash entry found
+	
+end:
+	if (foundIndex == -1) {
+		cout << "Application not found." << endl;
+	} else {
+		tree* node = hashTable[foundIndex].app_node;
+		cout << "Category: " << node->app.category << endl;
+		cout << "Application Name: " << node->app.app_name << endl;
+		cout << "Version: " << node->app.version << endl;
+		cout << "Size: " << node->app.size << endl;
+		cout << "Units: " << node->app.units << endl;
+		cout << "Price: " << node->app.price << endl;
+	}
+}
+
+// Finds category and prints nodes in-order by app_name
+void findCategory(char* catName) {
+	int foundIndex = -1;
+	
+	for (int i = 0; i < categoryListLength; i++) {
+		if (strcmp(categoryList[i].category, catName) == 0) {
+			foundIndex = i;
+			break;
+		}
+	}
+	
+	if (foundIndex == -1) {
+		cout << "Category not found." << endl;
+	} else { // Category Found, print all apps in-order
+		printTree(categoryList[foundIndex].root);
+	}
+	
+}
+
+// Find and print all free apps
+void findPriceFree() {
+	for (int i = 0; i < categoryListLength; i++) { // For each category
+		// Organize output by category
+		cout << "Category: " << categoryList[i].category << endl;
+		tree* root = categoryList[i].root;
+		int found = traversePriceFree(root, 0);
+		if (found == 0) {
+			cout << "No free applications found." << endl;
+		}
+	}
+}
+
+// Traverse tree, if price == 0, printout and found++
+int traversePriceFree(tree* node, int found) {
+	if (node == NULL) return 0;
+	traversePriceFree(node->left, found);
+	if (node->app.price == 0) {
+		cout << node->app.app_name << endl;
+		++found;
+	}
+	traversePriceFree(node->right, found);
+	
+	return found;
+}
+
+// Find and print all apps in category whos price is between low and high criteria
+void rangePrice(char* category) {
+	int desiredIndex;
+	// Look through category list for appropriate index
+	for (int i = 0; i < categoryListLength; i++) {
+		if (strcmp(categoryList[i].category, category) == 0) {
+			desiredIndex = i; // Index found
+			break;
+		}
+	}
+	
+	// At categoryList[desiredIndex], look for app between <low> and <high>
+	int low, high;
+	cin >> low; cin >> high;
+	
+	tree* root = categoryList[desiredIndex].root;
+	int found = traverseRangePrice(root, 0, low, high);
+	if (found == 0) {
+		cout << "No applications found for given range." << endl;
+	}
+}
+
+// Traverse tree, if low <= price <= high, print app_name
+int traverseRangePrice(tree *node, int found, int low, int high) {
+	if (node == NULL) return 0;
+	traverseRangePrice(node->left, found, low, high);
+	if (node->app.price >= low && node->app.price <= high) {
+		cout << node->app.app_name << endl;
+		++found;
+	}
+	traverseRangePrice(node->right, found, low, high);
+	
+	return found;
+}
+
+// Find and print all apps in category whos price is between low and high criteria
+void rangeApp(char* category) {
+	int desiredIndex;
+	// Look through category list for appropriate index
+	for (int i = 0; i < categoryListLength; i++) {
+		if (strcmp(categoryList[i].category, category) == 0) {
+			desiredIndex = i; // Index found
+			break;
+		}
+	}
+	
+	// At categoryList[desiredIndex], look for app_name between <low> and <high>
+	char low[25], high[25];
+	cin >> low; cin >> high;
+	
+	tree* root = categoryList[desiredIndex].root;
+	int found = traverseRangeApp(root, 0, low, high);
+	if (found == 0) {
+		cout << "No applications found for given range." << endl;
+	}
+}
+
+// Traverse tree, if low <= price <= high, print app_name
+int traverseRangeApp(tree *node, int found, char* low, char* high) {
+	if (node == NULL) return 0;
+	traverseRangeApp(node->left, found, low, high);
+	if (strcmp(node->app.app_name, low) >= 0 && strcmp(node->app.app_name, high) <= 0) {
+		cout << node->app.app_name << endl;
+		++found;
+	}
+	traverseRangeApp(node->right, found, low, high);
+	
+	return found;
+}
+
+
+// Find and return next prime number after min
 int nextPrimeNumber(int min) {
 	if (min == 2) return 2;
 	if (min == 3) return 3;
