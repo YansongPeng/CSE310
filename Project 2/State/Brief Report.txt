@@ -1,0 +1,13 @@
+1. Describe any problems encountered in your implementation for this project milestone.
+This project proved especially difficult because of the wide usage of pointers. Once issues were solved for pointers, the project implementation was smoother, but still hard.
+There were a lot of complex algorithms and data structures to maintain, which proved to be difficult.
+2. Describe any known bugs and/or incomplete command implementation for the project milestone.
+Because of time limitations, I am not able to complete the <delete category app name> command.
+
+I am having trouble accessing general.asu, so I am hoping that there is time to fix any issues that may arise there before submission.
+3. Describe any significant collaboration with anyone (peers or otherwise) and/or clearly reference any external code bases used.
+• http://articles.leetcode.com/2010/04/binary-search-tree-in-order-traversal.html
+	- Binary search tree in-order traversal functions were derived and understood from this website.
+• http://c.learncodethehardway.org/book/index.html
+	- General C syntax help
+• Various youtube channels used during studying for exam 2 to understand how the used data structures and algorithms work. No code was taken from these videos, only concepts.

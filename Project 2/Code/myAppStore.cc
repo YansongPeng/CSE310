@@ -113,25 +113,25 @@ int main()
 	// Populate myAppStore with m applications
 	for (int i = 0; i<numberOfApplications; i++) {
 		struct tree* node = new tree();
-		
-		printf("Enter category for application %d\n", i); //TODO remove this, debug only
+
+//		printf("Enter category for application %d\n", i); //TODO remove this, debug only
 		
 		// Read in category name from next line of cin
 		char categoryName[ CAT_NAME_LEN ];
 		cin.ignore();
 		cin.getline(categoryName, CAT_NAME_LEN);
 		
-		printf("Application is being created in category: %s\n", categoryName); //TODO remove this, debug only
+//		printf("Application is being created in category: %s\n", categoryName); //TODO remove this, debug only
 		
 		int desiredCategoryIndex = -1;
-		printf("Searching for category: %s\n", categoryName); //TODO remove this, debug only
+//		printf("Searching for category: %s\n", categoryName); //TODO remove this, debug only
 		// Search the array of categories, to find the position matching the category of the application.
 		for (int index = 0; index <= categoryListLength; index++) {
 			
 			// Compare category name at <index> with desired category name
 			if (strcmp(categoryName, categoryList[index].category) == 0) {
 				desiredCategoryIndex = index;
-				printf("Found desired category at index: %d\n", desiredCategoryIndex); //TODO remove this, debug only
+//				printf("Found desired category at index: %d\n", desiredCategoryIndex); //TODO remove this, debug only
 				break; // No need to search further
 			}
 		}
@@ -140,7 +140,7 @@ int main()
 			printf("Category not found.");
 		} else {
 			// Read the information of the application
-			printf("Enter application information:\n"); //TODO remove this, debug only
+//			printf("Enter application information:\n"); //TODO remove this, debug only
 			strcpy(node->app.category, categoryName);
 			cin.getline(node->app.app_name, APP_NAME_LEN);
 			cin >> node->app.version;
@@ -247,14 +247,14 @@ void insertHashEntry(tree* node) {
 	
 	// Check if linear probing is necessary
 	if (hashTable[insertionIndex].app_node == NULL) {
-		cout << "Hash location empty! Inserting at " << insertionIndex << endl;
+//		cout << "Hash location empty! Inserting at " << insertionIndex << endl;
 		strcpy(hashTable[insertionIndex].app_name, node->app.app_name);
 		hashTable[insertionIndex].app_node = node;
 	} else { // Linear probe
 		int i = insertionIndex+1; // Start linear probing at insertionIndex+1, since we already know that hashTable[insertionIndex] is full
 		while (hashTable[i].app_node != NULL) { // Traverse through hashTable until empty slot is found
 			if (i > hashTableLength) i = 0;
-			cout << "Linear probing at " << i << endl;
+//			cout << "Linear probing at " << i << endl;
 			i++;
 			if (i == insertionIndex) {
 				cout << "Hash table full, myAppstore exiting." << endl;
@@ -265,7 +265,7 @@ void insertHashEntry(tree* node) {
 			}
 		}
 		// hashTable[i] is NULL, insert here
-		cout << "Hash location empty! Inserting at " << i << endl;
+//		cout << "Hash location empty! Inserting at " << i << endl;
 		strcpy(hashTable[i].app_name, node->app.app_name);
 		hashTable[i].app_node = node;
 	}
