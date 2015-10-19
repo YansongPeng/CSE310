@@ -1,10 +1,11 @@
 1. Describe any problems encountered in your implementation for this project milestone.
 This project proved especially difficult because of the wide usage of pointers. Once issues were solved for pointers, the project implementation was smoother, but still hard.
+
 There were a lot of complex algorithms and data structures to maintain, which proved to be difficult.
 2. Describe any known bugs and/or incomplete command implementation for the project milestone.
-Because of time limitations, I am not able to complete the <delete category app name> command.
+Because of time limitations (Calculus has me equally busy :)), I am not able to complete the <delete category app name> command.
 
-I am having trouble accessing general.asu, so I am hoping that there is time to fix any issues that may arise there before submission.
+I was having trouble accessing general.asu, but I did manage to briefly test my code on general.asu.edu. Hopefully there are no further issues that show up on general.asu.edu but not OS X 10.11 g++.
 3. Describe any significant collaboration with anyone (peers or otherwise) and/or clearly reference any external code bases used.
 • http://articles.leetcode.com/2010/04/binary-search-tree-in-order-traversal.html
 	- Binary search tree in-order traversal functions were derived and understood from this website.
