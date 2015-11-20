@@ -5,6 +5,8 @@
 2. Describe any known bugs and/or incomplete command implementation for the project milestone.
 Again, forgetting to use getline instead of cin for app_name and category_name was my biggest issue. The whole app broke when a test was ran with multiword apps/categories.
 
+No known bugs / incomplete commands exist in this project milestone submission. Everything has been tested for correctness.
 
 
 3. Describe any significant collaboration with anyone (peers or otherwise) and/or clearly reference any external code bases used.
+• http://www.cplusplus.com/reference/list/list/

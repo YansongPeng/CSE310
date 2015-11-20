@@ -7,8 +7,12 @@
 
 using namespace std;
 
-/* Function Pre Declaration */
+/* Function Pre-Declaration */
 void printList(list<int>* adjlist, int listLength);
+void degreeDistribution();
+void shortestPath(int s, int t);
+void diameter();
+void components();
 
 /* Global Variables */
 list<int> *adjacencyList; // Stores our vertex-edge adjacency list
@@ -29,7 +33,7 @@ int main()
 	// Each of the next m lines gives an edge e = (u,v) ∈ E specified by its two endpoints.
 	for (int i = 0; i < m; i++) {
 		int u, v; // Endpoints of an edge
-		cin >> u >> v; // Read in adjacency list in form "u \t v"
+		cin >> u >> v; cin.ignore(); // Read in adjacency list in form "u \t v"
 		
 //		cout << u << '\t' << v << endl; // Debug, reprints what was read in
 
@@ -43,21 +47,72 @@ int main()
 //	printList(adjacencyList, n); // Debug, prints the adjacency list
 	
 	int numOperations = 0;
-	cin >> numOperations; // Read in the number of operations to perform
+	cin >> numOperations; cin.ignore(); // Read in the number of operations to perform
 	
 	// Perform <numOperations> given functions
 	for (int o = 0; o < numOperations; o++) {
+		string operation;
+		cin >> operation; cin.ignore();
+		
+		// Perform appropriate operation
+		if (operation == "degree-distribution") {
+			degreeDistribution();
+		} else if (operation == "shortest-path") {
+			int s, t;
+			cin >> s >> t; cin.ignore();
+			shortestPath(s, t);
+		} else if (operation == "diameter") {
+			diameter();
+		} else if (operation == "components") {
+			components();
+		} else {
+			cout << "Invalid operation." << endl;
+		}
 	}
 }
 
 /* Prints the adjacency list, for debugging */
-void printList(list<int>* adjlist, int listLength) {
-//print the adjacency list (just for sanity check, not required in P3)
-	for(int index = 0; index < listLength; index++){
-		cout << index << " ";
-		for(list<int>::iterator it = adjlist[index].begin(); it != adjlist[index].end(); ++it){
+void printList(list<int>* adjacenyList, int listLength) {
+	for(int i = 0; i < listLength; i++) {
+		cout << i << " ";
+		for(list<int>::iterator it = adjacenyList[i].begin(); it != adjacenyList[i].end(); ++it) {
 			cout << *it << " ";
 		}
-		cout << "\n";
+		cout << endl;
 	}
+}
+
+/* Prints the degree distribution of the graph as a histogram.
+ *	Histogram counts the number of nodes of degree i, 0 ≤ i ≤ n.
+ *	The node degree is given on the x axis, and the count is the y axis;
+ *	if n = |V| is large, the node degree is  aggregated.
+ */
+void degreeDistribution() {
+
+}
+
+/* Prints the length and path taken of the shortest path in adjacency list between s and t.
+ *  Uses Dijkstra’s algorithm to compute shortest path.
+ *  S: source vertex
+ *  V: destination vertex
+ */
+void shortestPath(int s, int t) {
+
+}
+
+/* Prints the diameter of the graph defined as the length of the longest shortest path.
+ * Uses Floyd-Warshall all-pairs shortest path algorithm.
+ */
+void diameter() {
+
+}
+
+/* Prints the number of connected components in the graph and their size.
+ * Size = number of vertices in each component.
+ * Uses breadth-first search, marking and counting nodes as the search proceeds.
+ * If any unmarked vertices exist, a new breadth-first search is started at unmarked node.
+ * Repeats until all nodes are marked.
+ */
+void components() {
+
 }
