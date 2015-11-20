@@ -1,12 +1,14 @@
 1. Describe any problems encountered in your implementation for this project milestone.
-
-
+• I had a hard time using the breadth-first search algorithm for the components operation, so I opted for the depth-first search algorithm.
+• I mistakenly implemented my milestone with a List, but was told this is unnacceptable. Switching to an array can add a lot of extra work and bugs to my tested milestone submission.
 
 2. Describe any known bugs and/or incomplete command implementation for the project milestone.
-Again, forgetting to use getline instead of cin for app_name and category_name was my biggest issue. The whole app broke when a test was ran with multiword apps/categories.
-
-No known bugs / incomplete commands exist in this project milestone submission. Everything has been tested for correctness.
-
+• No known bugs / incomplete commands exist in this project milestone submission. Everything has been tested for correctness.
+• Shortest Path and Diameter must still be implemented before my complete project submission.
 
 3. Describe any significant collaboration with anyone (peers or otherwise) and/or clearly reference any external code bases used.
 • http://www.cplusplus.com/reference/list/list/
+• http://www.fileformat.info/info/unicode/char/2588/index.htm
+• http://stackoverflow.com/questions/21900713/finding-all-connected-components-of-an-undirected-graph
+• http://stackoverflow.com/questions/15857994/number-of-connected-components-in-a-undirected-graph
+• https://web.stanford.edu/class/cs97si/06-basic-graph-algorithms.pdf
