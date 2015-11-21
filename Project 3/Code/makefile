@@ -1,7 +1,7 @@
 TARGET = p3
 LIBS = -lm
 CC = g++
-CFLAGS = -c
+CFLAGS = -std=c++11 -c
 
 .PHONY: default all clean
 
