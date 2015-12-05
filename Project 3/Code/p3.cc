@@ -7,8 +7,11 @@
 
 using namespace std;
 
+#define INFINITY 9999
+
 /* Function Pre-Declaration */
 void graphDegreeDistribution(int degreeCount[], int listLength);
+bool isFinished(int array[], int arraySize);
 
 /* Adjacency List Node data structure (edge)
  * Linked List data structure for storing linked vertices
@@ -119,14 +122,92 @@ public:
 	 *  V: destination vertex
 	 */
 	void shortestPath(int s, int t) {
-		cout << "Shortest Path operation will be implemented in complete project submission." << endl;
+		int known[size]; // shortest distance to vertex is know
+		int cost[size]; // distance from source <s> to each vertex
+		int path[size]; //path
+		
+		// Initialization: Set all distances to infinity (represented by -1), since arrays have not been visited and graph is positively weighted
+		for (int index = 0; index<size; index++) {
+			cost[index] = INFINITY;
+			known[index] = 0;
+		}
+		
+		// Set distance from source->source to 0
+		cost[s] = 0;
+		
+		// Starting at s, traverse towards all reachable unvisited verticies, visit it and repeat
+		while (isFinished(known, size) == false) {
+			// Select a vertex from list of unvisited nodes which has the smallest cost
+			int cheapestVertex, cheapestValue = INFINITY+1;
+			for (int costCheck = 0; costCheck<size; costCheck++) {
+				if ((known[costCheck] == 0) && (cost[costCheck] < cheapestValue)) {
+					// We found a cheaper unvisited vertex
+					cheapestVertex = costCheck;
+					cheapestValue = cost[cheapestVertex];
+				}
+			}
+			
+			
+			//			cout << "Cheapest vertex: " << cheapestVertex << endl;
+			// For each unvisited neighbor of our cheapest (unvisited) vertex
+			adjacencyListNode* iterator = A[cheapestVertex].head; // iterator is our first neighbor
+			while (iterator)
+			{
+				// Calculate the new cost from the current vertex <cheapestVertex>
+				if (cost[cheapestVertex]+1 < cost[iterator->destination] && known[iterator->destination] == 0) {
+					cost[iterator->destination] = cost[cheapestVertex]+1;
+					path[iterator->destination] = cheapestVertex;
+				}
+				iterator = iterator->next; // move to next neighbor, repeat
+			}
+			
+			//			cout << "Cheapest vertex: " << cheapestVertex  << " known." << endl;
+			// Mark the current vertex <cheapestVertex> as visited
+			known[cheapestVertex] = 1;
+			
+			// DEBUG: (REMOVE BEFORE SUBMISSION)
+//			for (int i = 0; i<size; i++) {
+//				cout << "Vertex " << i << " : known? " << known[i] << ", cost? " << cost[i] << endl;
+//			}
+//			cout << endl;
+			
+			if (cost[t-1] != INFINITY) break; // We already know shortest path, end.
+		}
+		// Print shortest path to t
+		cout << "Path to t: ";
+		// TODO
+		
+		// We know the shortest path cost to t
+		cout << "Cost to t: " << cost[t] << endl;
+	}
+	
+	bool isFinished(int array[], int arraySize) {
+		bool finished = true;
+		for (int iterator=0; iterator < arraySize; iterator++) {
+			if (array[iterator] == 0) {
+				// vertex not known, we're not done.
+				finished = false;
+			}
+		}
+		return finished;
 	}
 	
 	/* Prints the diameter of the graph defined as the length of the longest shortest path.
 	 * Uses Floyd-Warshall all-pairs shortest path algorithm.
 	 */
 	void diameter() {
-		cout << "Diameter operation will be implemented in complete project submission." << endl;
+//		int dist[size][size];
+//		let dist be a |V| × |V| array of minimum distances initialized to ∞ (infinity)
+//		for each vertex v
+//			dist[v][v] ← 0
+//		for each edge (u,v)
+//			dist[u][v] ← w(u,v)  // the weight of the edge (u,v)
+//		for k from 1 to |V|
+//			for i from 1 to |V|
+//				for j from 1 to |V|
+//					if dist[i][j] > dist[i][k] + dist[k][j]
+//						dist[i][j] ← dist[i][k] + dist[k][j]
+//					end if
 	}
 	
 	/* Prints the number of connected components in the graph and their size.
@@ -286,7 +367,7 @@ int main()
 	}
  
 	// DEBUG: print graph (REMOVE BEFORE SUBMISSION)
-	//		adjList.printGraph();
+	//	adjList.printGraph();
 	
 	int numOperations = 0;
 	cin >> numOperations; cin.ignore(); // Read in the number of operations to perform
@@ -298,14 +379,18 @@ int main()
 		
 		// Perform appropriate operation
 		if (operation == "degree-distribution") {
+			cout << "\ndegree-distribution:" << endl;
 			adjList.degreeDistribution();
 		} else if (operation == "shortest-path") {
 			int s, t;
 			cin >> s >> t; cin.ignore();
+			cout << "\nshortest-path " << s << " " << t << ":" << endl;
 			adjList.shortestPath(s, t);
 		} else if (operation == "diameter") {
-			//			diameter();
+			cout << "\ndiameter:" << endl;
+			adjList.diameter();
 		} else if (operation == "components") {
+			cout << "\ncomponents:" << endl;
 			adjList.components();
 		} else {
 			cout << "Invalid operation." << endl;
